@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rig Check — Hardware-Aware Open-Source Model Advisor</title>
+<meta name="description" content="Discover which open-source AI models your machine can run based on your CPU, RAM, and GPU. Test models live and get exact hardware diagnosis.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <div class="logo-group">
+      <div class="logo-chip" aria-hidden="true">
+        <span class="chip-dot"></span>
+      </div>
+      <a href="#" class="logo">RIG<span class="logo__accent">CHECK</span></a>
+    </div>
+
+    <div class="topbar__status" id="topbarStatus">
+      <span class="status-indicator status-indicator--checking"></span>
+      <span id="serverStatusText">Connecting server…</span>
+    </div>
+
+    <nav class="topnav">
+      <a href="#scan">Diagnosis</a>
+      <a href="#deepscan">Deep Scan</a>
+      <a href="#results">Models</a>
+      <a href="deep_scan.py" class="topnav__download" download>Download Script</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- Hero Section -->
+  <section class="hero" id="scan">
+    <div class="wrap hero__grid">
+      <div class="hero__copy">
+        <div class="hero__badge">
+          <span class="badge-spark"></span>
+          <span>Zero Installation Instant Hardware Advisor</span>
+        </div>
+        <h1>Know what models your machine can <span class="gradient-text">actually run</span>.</h1>
+        <p class="hero__sub">
+          Stop guessing parameter sizes. Scan your CPU, RAM, and GPU straight from the browser
+          to instantly get matched with the best open-source models for writing, thinking, coding, and project management.
+        </p>
+        <div class="hero__ctas">
+          <button id="btnQuickScan" class="btn btn--primary">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            <span>Run Quick Diagnosis</span>
+          </button>
+          <a href="#deepscan" class="btn btn--secondary">
+            <span>Unlock Exact Specs</span>
+          </a>
+        </div>
+        <p class="hero__hint">Instant in-browser scan. No software installed, zero telemetry.</p>
+      </div>
+
+      <!-- Hardware Readout Panel -->
+      <div class="readout-card" id="readoutPanel" aria-live="polite">
+        <div class="readout-card__header">
+          <div class="readout-card__title-box">
+            <span class="readout-card__title">Hardware Telemetry</span>
+            <span class="readout-badge" id="scanSourceBadge">Idle</span>
+          </div>
+          <button id="btnRefreshScan" class="btn-icon-only" title="Re-run Quick Scan" aria-label="Refresh Scan">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          </button>
+        </div>
+
+        <div class="readout__grid">
+          <div class="readout__row">
+            <span class="readout__label">CPU</span>
+            <span class="readout__value" id="rCores">—</span>
+          </div>
+          <div class="readout__row">
+            <span class="readout__label">Memory (RAM)</span>
+            <span class="readout__value" id="rRam">—</span>
+          </div>
+          <div class="readout__row">
+            <span class="readout__label">Graphics / GPU</span>
+            <span class="readout__value" id="rGpu">—</span>
+          </div>
+          <div class="readout__row">
+            <span class="readout__label">Storage Space</span>
+            <span class="readout__value" id="rStorage">—</span>
+          </div>
+          <div class="readout__row">
+            <span class="readout__label">Operating System</span>
+            <span class="readout__value" id="rPlatform">—</span>
+          </div>
+        </div>
+
+        <div class="readout__status-bar">
+          <span class="status-pulse" id="statusPulse"></span>
+          <span class="readout__status-text" id="readoutStatus">Click "Run Quick Diagnosis" to read hardware.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deep Scan Bridge Section -->
+  <section class="deepscan" id="deepscan">
+    <div class="wrap deepscan__inner">
+      <div class="deepscan__text">
+        <div class="deepscan__tag">Hardware Deep Scan Helper</div>
+        <h2>Unlock exact VRAM, memory speeds & storage</h2>
+        <p>
+          Browsers intentionally sandbox JavaScript from reading CPU cache, RAM frequencies (DDR4 vs DDR5 vs LPDDR5 Unified),
+          and exact GPU VRAM. Run our lightweight, zero-dependency Python helper once. It communicates securely only with this tab over localhost.
+        </p>
+
+        <div class="deepscan__quickrun">
+          <div class="command-box">
+            <span class="command-box__prompt">$</span>
+            <code id="deepScanCmd">python3 deep_scan.py</code>
+            <button class="command-box__copy" id="btnCopyCmd" title="Copy to clipboard">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Copy</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="deepscan__actions-box">
+        <div class="deepscan__status-indicator" id="deepScanConnectionStatus">
+          <span class="indicator-dot indicator-dot--offline" id="deepScanDot"></span>
+          <span id="deepScanStatusLabel">Helper Disconnected</span>
+        </div>
+        <div class="deepscan__btn-group">
+          <button id="btnDeepScan" class="btn btn--primary btn--glow">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            <span>Connect Deep Scan</span>
+          </button>
+          <a class="btn btn--ghost" href="deep_scan.py" download="deep_scan.py">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span>Download .py</span>
+          </a>
+        </div>
+        <div class="deepscan__subtext">Pure standard library — no pip dependencies required.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Model Recommendations Section -->
+  <section class="results" id="results">
+    <div class="wrap">
+      <div class="results__header">
+        <div>
+          <h2>Tailored Model Recommendations</h2>
+          <p class="results__tier-desc" id="tierSummary">Run a hardware diagnosis above to view models curated for your rig.</p>
+        </div>
+
+        <div class="category-filters" id="categoryFilters" role="tablist">
+          <button class="filter-chip active" data-category="all">All Models</button>
+          <button class="filter-chip" data-category="writing">Writing</button>
+          <button class="filter-chip" data-category="thinking">Reasoning</button>
+          <button class="filter-chip" data-category="coding">Coding</button>
+          <button class="filter-chip" data-category="projectmgmt">Management</button>
+        </div>
+      </div>
+
+      <div class="tier-card-banner" id="tierBanner" hidden>
+        <div class="tier-banner__left">
+          <span class="tier-banner__badge" id="tierBadge">Mid Tier</span>
+          <span class="tier-banner__label" id="tierLabel">Detected Profile</span>
+        </div>
+        <div class="tier-banner__info" id="tierDetail">
+          Capable of running 14B parameter models with full quantization in GPU/Unified Memory.
+        </div>
+      </div>
+
+      <div class="cards" id="modelCards">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Interactive Try-it Modal -->
+<div class="modal" id="tryModal" hidden role="dialog" aria-modal="true" aria-labelledby="tryModalTitle">
+  <div class="modal__overlay" id="modalOverlay"></div>
+  <div class="modal__box">
+    <div class="modal__header">
+      <div class="modal__title-wrap">
+        <h3 id="tryModalTitle">Try a model</h3>
+        <span class="modal__model-tag" id="tryModelTag">ollamaTag</span>
+      </div>
+      <button class="modal__close" id="tryModalClose" aria-label="Close dialog">×</button>
+    </div>
+
+    <div class="modal__mode-banner" id="tryModeBanner">
+      <span class="mode-dot"></span>
+      <span id="tryModeText">Running via backend proxy — keep keys secure</span>
+    </div>
+
+    <div class="modal__prompts">
+      <span class="prompts__label">Example Prompts:</span>
+      <div class="prompts__chips">
+        <button class="prompt-chip" data-prompt="Explain quantum entanglement using an intuitive analogy.">Quantum Entanglement</button>
+        <button class="prompt-chip" data-prompt="Write an efficient algorithm in Python with memoization.">Python Algorithm</button>
+        <button class="prompt-chip" data-prompt="Draft a crisp executive project update covering milestones and risk mitigations.">Executive Update</button>
+      </div>
+    </div>
+
+    <div class="modal__input-wrap">
+      <textarea id="tryPrompt" rows="3" placeholder="Type your prompt here or click a preset above... (Cmd/Ctrl + Enter to send)"></textarea>
+      <div class="input-actions">
+        <span class="char-count" id="charCount">0 / 2000</span>
+        <button id="tryRun" class="btn btn--primary btn--compact">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          <span id="tryBtnText">Send Prompt</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="modal__response-header">
+      <span>Output Response:</span>
+      <button class="btn-copy-small" id="btnCopyResponse" title="Copy response">Copy Text</button>
+    </div>
+    <pre id="tryOutput" class="modal__output">Waiting for prompt...</pre>
+  </div>
+</div>
+
+<!-- Toast Feedback Container -->
+<div class="toast-container" id="toastContainer" aria-live="assertive"></div>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <div>
+      <span class="footer__logo">RIG CHECK</span> — Open-source hardware compatibility intelligence.
+    </div>
+    <div class="footer__links">
+      <a href="https://ollama.com" target="_blank" rel="noopener">Ollama Library</a>
+      <a href="https://ollama.com/settings/keys" target="_blank" rel="noopener">Ollama Cloud Keys</a>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+{
+  "_note": "Curated reference data, not pulled live from Ollama (no public library-browse API exists). Re-check tags against https://ollama.com/library periodically — models and versions change.",
+  "tiers": [
+    { "id": "light", "label": "Light",  "maxCapacityGb": 10, "description": "Runs on integrated graphics or 8GB+ RAM alone." },
+    { "id": "mid",   "label": "Mid",    "maxCapacityGb": 20, "description": "Wants a dedicated GPU with 10–16GB VRAM, or 16GB+ system RAM." },
+    { "id": "high",  "label": "High",  "maxCapacityGb": 999, "description": "Wants 20GB+ VRAM, or a workstation-class machine." }
+  ],
+  "categories": [
+    {
+      "id": "writing",
+      "label": "Writing",
+      "blurb": "Drafting, editing, tone and style work.",
+      "models": {
+        "light": { "name": "Llama 3.1 8B",     "ollamaTag": "llama3.1:8b",     "approxSizeGb": 4.7 },
+        "mid":   { "name": "Qwen2.5 14B",       "ollamaTag": "qwen2.5:14b",     "approxSizeGb": 9.0 },
+        "high":  { "name": "Qwen2.5 32B",       "ollamaTag": "qwen2.5:32b",     "approxSizeGb": 19.0 }
+      }
+    },
+    {
+      "id": "thinking",
+      "label": "Thinking / Reasoning",
+      "blurb": "Multi-step reasoning, math, planning problems.",
+      "models": {
+        "light": { "name": "DeepSeek-R1 8B (distilled)", "ollamaTag": "deepseek-r1:8b",  "approxSizeGb": 4.9 },
+        "mid":   { "name": "DeepSeek-R1 14B (distilled)", "ollamaTag": "deepseek-r1:14b", "approxSizeGb": 9.0 },
+        "high":  { "name": "QwQ 32B",                     "ollamaTag": "qwq:32b",         "approxSizeGb": 20.0 }
+      }
+    },
+    {
+      "id": "coding",
+      "label": "Coding",
+      "blurb": "Autocomplete, refactors, debugging, code review.",
+      "models": {
+        "light": { "name": "Qwen2.5-Coder 7B",  "ollamaTag": "qwen2.5-coder:7b",  "approxSizeGb": 4.7 },
+        "mid":   { "name": "Qwen2.5-Coder 14B", "ollamaTag": "qwen2.5-coder:14b", "approxSizeGb": 9.0 },
+        "high":  { "name": "Qwen2.5-Coder 32B", "ollamaTag": "qwen2.5-coder:32b", "approxSizeGb": 19.0 }
+      }
+    },
+    {
+      "id": "projectmgmt",
+      "label": "Project Management",
+      "blurb": "Summarizing, planning, structured task breakdowns.",
+      "models": {
+        "light": { "name": "Llama 3.1 8B",   "ollamaTag": "llama3.1:8b",       "approxSizeGb": 4.7 },
+        "mid":   { "name": "Mistral Small",  "ollamaTag": "mistral-small:22b", "approxSizeGb": 13.0 },
+        "high":  { "name": "Qwen2.5 32B",    "ollamaTag": "qwen2.5:32b",       "approxSizeGb": 19.0 }
+      }
+    }
+  ]
+}
